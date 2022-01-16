@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DemoBlaze.iml" filepath="$PROJECT_DIR$/.idea/DemoBlaze.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/demoblaze_and_JSONPlaceholder_tests.iml" filepath="$PROJECT_DIR$/.idea/demoblaze_and_JSONPlaceholder_tests.iml" />
     </modules>
   </component>
 </project>
