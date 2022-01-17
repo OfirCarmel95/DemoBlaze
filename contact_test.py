@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from read_json_data import read_data
 
 
 class TestContact:
@@ -16,10 +17,8 @@ class TestContact:
         self.driver.close()
         self.driver.quit()
 
-    @pytest.mark.parametrize("email, name, message",
-                             [("example@gmail.com", "Random Full Name", "an example message"),
-                              ("", "Random Full Name", "an example message")]
-                             )
+    @pytest.mark.parametrize("email, name, message", read_data("./data_files/contact_data.json"))
+    @pytest.mark.demoblaze
     def test_contact(self, test_setup, email, name, message):
         print("getting demo blaze url...")
         self.driver.get(demoBlazeUrl)

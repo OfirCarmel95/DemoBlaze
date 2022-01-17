@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from read_json_data import read_data
 
 class TestLogin:
     @pytest.fixture()
@@ -13,12 +14,8 @@ class TestLogin:
         yield
         self.driver.close()
         self.driver.quit()
-
-    @pytest.mark.parametrize("username, password",
-                             [("usr123", "12345"),
-                              ("usr123", "examplepassword"),
-                              ("username123", "")]
-                             )
+    @pytest.mark.demoblaze
+    @pytest.mark.parametrize("username, password", read_data("./data_files/login_data.json"))
     def test_login(self, test_setup, username, password):
         print("getting demo blaze url...")
         self.driver.get(self.demoBlazeUrl)

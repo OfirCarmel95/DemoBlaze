@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from read_json_data import read_data
 
 
 class TestBuyProduct:
@@ -16,10 +17,8 @@ class TestBuyProduct:
         self.driver.close()
         self.driver.quit()
 
-    @pytest.mark.parametrize("product_name, customer_name, country, city, credit_card, month, year",
-                             [("Sony vaio i5", "Random Full Name", "Random Country", "Random City", "1234-1234-1234-1234", "1", "2022"),
-                              ("Sony vaio i5", "Random Full Name", "Random Country", "Random City", "", "6", "2022")]
-                             )
+    @pytest.mark.parametrize("product_name, customer_name, country, city, credit_card, month, year", read_data("./data_files/buy_product_data.json"))
+    @pytest.mark.demoblaze
     def test_buy_product(self, test_setup, product_name, customer_name, country, city, credit_card, month, year):
         print("getting demo blaze url...")
         self.driver.get(self.demoBlazeUrl)
