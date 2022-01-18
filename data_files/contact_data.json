@@ -1,0 +1,12 @@
+[
+    {
+        "email": "example@gmail.com",
+        "name": "Random Full Name",
+        "message": "an example message"
+    },
+    {
+        "email": "",
+        "name": "Random Full Name",
+        "message": "an example message"
+    }
+]

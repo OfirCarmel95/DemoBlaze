@@ -1,0 +1,20 @@
+[
+    {
+        "product_name": "Sony vaio i5",
+        "customer_name": "Random Full Name",
+        "country": "Random Country",
+        "city": "Random City",
+        "credit_card": "1234-1234-1234-1234",
+        "month": "1",
+        "year": "2022"
+    },
+    {
+        "product_name": "Sony vaio i5",
+        "customer_name": "Random Full Name",
+        "country": "Random Country",
+        "city": "Random City",
+        "credit_card": "",
+        "month": "6",
+        "year": "2022"
+    }
+]
