@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from read_json_data import read_data
-
+import time
 
 class TestBuyProduct:
     @pytest.fixture()
@@ -65,7 +65,7 @@ class TestBuyProduct:
         print("filling year...")
         year_field = self.driver.find_element(By.ID, "year")
         year_field.send_keys(year)
-        self.driver.implicitly_wait(1)
+        time.sleep(1)
         print("clicking on purchase...")
         purchase_button = self.driver.find_element(By.XPATH, f'//button[text()="Purchase"]')
         purchase_button.click()
