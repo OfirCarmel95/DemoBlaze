@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from read_json_data import read_data
+import time
 
 class TestLogin:
     @pytest.fixture()
@@ -31,7 +32,7 @@ class TestLogin:
         print("filling password...")
         password_field = self.driver.find_element(By.ID, "loginpassword")
         password_field.send_keys(password)
-        self.driver.implicitly_wait(1)
+        time.sleep(1)
         print("submitting details...")
         submit_button = self.driver.find_element(By.XPATH, f'//*[@id="logInModal"]/div/div/div[3]/button[2]')
         submit_button.click()
