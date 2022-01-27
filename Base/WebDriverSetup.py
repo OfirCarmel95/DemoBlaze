@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.service import Service
 class WebDriverSetup:
     @pytest.fixture(autouse=True)
     def set_up(self):
-        self.driver = webdriver.Chrome(service=Service("../drivers/chromedriver.exe"))
+        self.driver = webdriver.Chrome(service=Service())
         self.driver.implicitly_wait(10)
         self.driver.get("https://www.demoblaze.com/")
         self.driver.maximize_window()
