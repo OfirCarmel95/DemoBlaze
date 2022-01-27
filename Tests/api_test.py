@@ -1,11 +1,11 @@
 import pytest
 import requests
-from read_json_data import read_data
+from Base.read_json_data import read_data
 
 
 class TestAPI:
     @pytest.mark.parametrize("user_id, user_name, user_email, user_phone, user_city, user_zipcode, user_street, user_company_name",
-                             read_data('data_files/api_data.json'))
+                             read_data('../data_files/api_data.json'))
     def test_api(self, user_id, user_name, user_email, user_phone, user_city, user_zipcode, user_street, user_company_name):
         self.api_url = "https://jsonplaceholder.typicode.com/users"
         self.parameters = {"id": user_id}
