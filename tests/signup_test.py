@@ -1,13 +1,13 @@
 import pytest
-from Base.WebDriverSetup import WebDriverSetup
-from Base.read_json_data import read_data
-from Pages.BasePage import BasePage
+from base.WebDriverSetup import WebDriverSetup
+from base.read_json_data import read_data
+from pages.BasePage import BasePage
 from time import sleep
 
 
 @pytest.mark.usefixtures('set_up')
 class TestSignUp(WebDriverSetup):
-    @pytest.mark.parametrize("username, password", read_data("../data_files/signup_data.json"))
+    @pytest.mark.parametrize("username, password", read_data("./data_files/signup_data.json"))
     @pytest.mark.demoblaze
     def test_sign_up(self, username, password):
         driver = self.driver

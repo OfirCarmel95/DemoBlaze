@@ -1,9 +1,9 @@
 import pytest
-from Base.read_json_data import read_data
-from Base.WebDriverSetup import WebDriverSetup
-from Pages.BasePage import BasePage
-from Pages.ProductPage import ProductPage
-from Pages.CartPage import CartPage
+from base.read_json_data import read_data
+from base.WebDriverSetup import WebDriverSetup
+from pages.BasePage import BasePage
+from pages.ProductPage import ProductPage
+from pages.CartPage import CartPage
 from time import sleep
 
 
@@ -11,7 +11,7 @@ from time import sleep
 class TestBuyProduct(WebDriverSetup):
     @pytest.mark.demoblaze
     @pytest.mark.parametrize("product_name, customer_name, country, city, credit_card, month, year", read_data(
-        "../data_files/buy_product_data.json"))
+        "./data_files/buy_product_data.json"))
     def test_buy_product(self, product_name, customer_name, country, city, credit_card, month, year):
         driver = self.driver
         basePage = BasePage(driver)
