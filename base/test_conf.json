@@ -1,6 +1,7 @@
 [
   {
     "website_url": "https://www.demoblaze.com/",
-    "browser": "chrome"
+    "browser": "chrome",
+    "remote": false
   }
 ]
