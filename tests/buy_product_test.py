@@ -1,6 +1,8 @@
 import pytest
+from applitools.selenium import Target
+
 from base.read_json_data import read_data
-from base.WebDriverSetup import WebDriverSetup
+from base.conftest import Setup
 from pages.BasePage import BasePage
 from pages.ProductPage import ProductPage
 from pages.CartPage import CartPage
@@ -8,12 +10,16 @@ from time import sleep
 
 
 @pytest.mark.usefixtures('set_up')
-class TestBuyProduct(WebDriverSetup):
+class TestBuyProduct(Setup):
     @pytest.mark.demoblaze
+    @pytest.mark.usefixtures("eyes")
     @pytest.mark.parametrize("product_name, customer_name, country, city, credit_card, month, year", read_data(
         "./data_files/buy_product_data.json"))
     def test_buy_product(self, product_name, customer_name, country, city, credit_card, month, year):
         driver = self.driver
+        eyes = self.eyes
+        eyes.open(driver, "Demoblaze", "Buy Product test", {"width": 2560, "height": 1440})
+        eyes.check("Buy Product test Window test", Target.window())
         basePage = BasePage(driver)
         productPage = ProductPage(driver)
         cartPage = CartPage(driver)
@@ -42,3 +48,6 @@ class TestBuyProduct(WebDriverSetup):
         cartPage.click_on_purchase()
         sleep(1)
         cartPage.get_order_message()
+        eyes.check("Product bought", Target.window())
+        eyes.close(False)
+

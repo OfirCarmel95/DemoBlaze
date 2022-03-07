@@ -1,4 +1,6 @@
 import pytest
+import os
+from applitools.selenium import Eyes, BatchInfo
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -6,10 +8,24 @@ from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import IEDriverManager
 from webdriver_manager.opera import OperaDriverManager
 from base.read_json_data import read_data
-import os
+from dotenv import load_dotenv
 cwd = os.getcwd()
 
-class WebDriverSetup:
+class Setup:
+    @pytest.fixture(scope="module")
+    def batch_info(self):
+        return BatchInfo("Some general Test cases name")
+
+    @pytest.fixture(autouse=True, name="eyes", scope="function")
+    def eyes_setup(self, batch_info):
+        self.eyes = Eyes()
+        load_dotenv()
+        self.eyes.api_key = os.getenv("APPLITOOLS_API_KEY")
+        self.eyes.configure.batch = batch_info
+        yield self.eyes
+        # If the test was aborted before eyes.close was called, ends the test as aborted.
+        self.eyes.abort()
+
     @pytest.fixture(params=read_data("./base/test_conf.json"))
     def read_test_conf_data(self, request):
         self.website_url, self.browser, self.remote = request.param
@@ -18,26 +34,26 @@ class WebDriverSetup:
     def set_up(self, read_test_conf_data):
         if self.remote:
             if self.browser.casefold() == "Chrome".casefold():
-                dc = webdriver.DesiredCapabilities.CHROME
+                options = webdriver.ChromeOptions()
             elif self.browser.casefold() == "Firefox".casefold():
-                dc = webdriver.DesiredCapabilities.FIREFOX
+                options = webdriver.FirefoxOptions()
             elif self.browser.casefold() == "Internet Explorer".casefold():
-                dc = webdriver.DesiredCapabilities.INTERNETEXPLORER
+                options = webdriver.IeOptions()
             elif self.browser.casefold() == "Opera".casefold():
-                dc = webdriver.DesiredCapabilities.OPERA
+                options = webdriver.Opera()
             else:
                 raise ValueError("Invalid browser value")
             self.driver = webdriver.Remote(
-                desired_capabilities=dc,
+                options=options,
                 command_executor="http://localhost:4444/wd/hub",
             )
         else:
             if self.browser.casefold() == "Chrome".casefold():
-                self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install())
+                self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
             elif self.browser.casefold() == "Firefox".casefold():
-                self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+                self.driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
             elif self.browser.casefold() == "Internet Explorer".casefold():
-                self.driver = webdriver.Ie(executable_path=IEDriverManager().install())
+                self.driver = webdriver.Ie(service=Service(IEDriverManager().install()))
             elif self.browser.casefold() == "Opera".casefold():
                 self.driver = webdriver.Opera(executable_path=OperaDriverManager().install())
             else:
